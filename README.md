@@ -1,6 +1,6 @@
 # agent-specs
 
-Chinese documentation: [README.zh-CN.md](./README.zh-CN.md)
+Chinese documentation: [README.zh-CN](https://github.com/zzgosh/agent-specs/blob/main/docs/README.zh-CN.md)
 
 `agent-specs` is a CLI for managing `AGENTS.md` files.
 
@@ -142,35 +142,6 @@ The CLI only creates symlinks for agent clients that are actually detected on th
 | Source of truth already exists | Ask for confirmation | Back up to `.backup` and overwrite |
 | Agent path is a symlink | Replace it directly | Replace it directly |
 | Agent path is a regular file | Skip and report it | Back up to `.backup` and replace it |
-
-## Directory Structure
-
-```text
-agent-specs/
-|-- bin/
-|   `-- cli.mjs              # CLI entry point
-|-- src/
-|   |-- commands/
-|   |   |-- add.ts           # Install command
-|   |   |-- link.ts          # Rebuild symlinks
-|   |   |-- list.ts          # Show installation status
-|   |   |-- remove.ts        # Remove installs and links
-|   |   `-- update.ts        # Re-fetch from the original source
-|   |-- agents.ts            # Agent detection and client metadata
-|   |-- cli.ts               # Commander command registration
-|   |-- config.ts            # Config file read/write helpers
-|   |-- linker.ts            # Symlink creation / replacement / backup
-|   |-- prompt.ts            # Terminal confirmation prompt
-|   |-- source.ts            # Source URL parsing and content fetching
-|   `-- types.ts             # Shared types
-|-- build.config.mjs         # unbuild configuration
-|-- LICENSE                  # MIT license
-|-- package-lock.json        # npm lockfile
-|-- package.json             # Package metadata
-|-- README.md                # English documentation
-|-- README.zh-CN.md          # Simplified Chinese documentation
-`-- tsconfig.json
-```
 
 ## Development
 
