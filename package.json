@@ -40,5 +40,12 @@
     "rules",
     "symlink"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zzgosh/agent-specs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zzgosh/agent-specs/issues"
+  },
   "license": "MIT"
 }

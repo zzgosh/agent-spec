@@ -1,6 +1,6 @@
 # agent-specs
 
-English README: [README.md](./README.md)
+English README: [README.md](../README.md)
 
 统一管理 `AGENTS.md` 的 CLI 工具。
 
@@ -168,7 +168,8 @@ agent-specs/
 |-- package-lock.json        # npm lockfile
 |-- package.json             # 包元数据
 |-- README.md                # English documentation
-|-- README.zh-CN.md          # 中文文档
+|-- docs/
+|   `-- README.zh-CN.md      # 中文文档
 `-- tsconfig.json
 ```
 
