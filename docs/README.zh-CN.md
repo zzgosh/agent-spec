@@ -147,8 +147,14 @@ CLI 只会为检测到已安装的 agent 创建 symlink。
 
 ```text
 agent-specs/
+|-- .github/
+|   `-- workflows/
+|       |-- ci.yml          # PR 与 main 分支构建检查
+|       `-- release.yml     # 手动触发 npm 发布、tag 与 GitHub Release
 |-- bin/
 |   `-- cli.mjs              # CLI 入口
+|-- docs/
+|   `-- README.zh-CN.md      # 中文文档
 |-- src/
 |   |-- commands/
 |   |   |-- add.ts           # 安装命令
@@ -168,8 +174,6 @@ agent-specs/
 |-- package-lock.json        # npm lockfile
 |-- package.json             # 包元数据
 |-- README.md                # English documentation
-|-- docs/
-|   `-- README.zh-CN.md      # 中文文档
 `-- tsconfig.json
 ```
 
