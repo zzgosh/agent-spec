@@ -1,0 +1,44 @@
+{
+  "name": "agent-specs",
+  "version": "0.1.0",
+  "description": "CLI for managing AGENTS.md files",
+  "type": "module",
+  "bin": {
+    "agent-specs": "./bin/cli.mjs"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/cli.mjs"
+    }
+  },
+  "files": [
+    "bin",
+    "dist"
+  ],
+  "scripts": {
+    "build": "unbuild",
+    "dev": "tsx src/cli.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "commander": "^13.1.0",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.2",
+    "unbuild": "^3.5.0",
+    "tsx": "^4.19.4"
+  },
+  "keywords": [
+    "agent-specs",
+    "agents",
+    "ai",
+    "cli",
+    "rules",
+    "symlink"
+  ],
+  "license": "MIT"
+}

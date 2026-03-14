@@ -1,0 +1,21 @@
+/node_modules/
+/dist/
+/local-docs/
+*.backup
+*.tgz
+*.tsbuildinfo
+
+# Runtime files that may be created when testing the CLI in the repo root
+/.agents.json
+/AGENTS.md
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor / system files
+.DS_Store
+.idea/
+.vscode/
