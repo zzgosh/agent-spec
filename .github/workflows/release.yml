@@ -75,14 +75,10 @@ jobs:
           git tag -a "${{ steps.package.outputs.tag }}" -m "${{ steps.package.outputs.tag }}"
           git push origin "${{ steps.package.outputs.tag }}"
 
-      - name: Install Claude Code CLI
-        run: npm install -g @anthropic-ai/claude-code
-
       - name: Generate release notes with Claude
         id: generate-notes
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          ANTHROPIC_BASE_URL: https://openrouter.ai/api
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
         run: |
           set -euo pipefail
 
@@ -103,26 +99,42 @@ jobs:
             DIFF_STAT="Initial release"
           fi
 
-          claude -p --max-turns 1 --model anthropic/claude-sonnet-4.6 "
-          You are a release notes generator. Based on the git changes below, write concise and natural release notes for version ${TAG}.
+          PROMPT="You are a release notes generator. Based on the git changes below, write concise and natural release notes for version ${TAG}.
 
-          Project: ${{ steps.package.outputs.name }} (CLI for managing AGENTS.md files)
+Project: ${{ steps.package.outputs.name }} (CLI for managing AGENTS.md files)
 
-          Git commits:
-          ${GIT_LOG}
+Git commits:
+${GIT_LOG}
 
-          File change stats:
-          ${DIFF_STAT}
+File change stats:
+${DIFF_STAT}
 
-          Requirements:
-          - Describe changes in clear, user-facing English
-          - Group by category where appropriate (e.g. ✨ Features / 🐛 Bug Fixes / 🔧 Improvements / 📦 Build & Release)
-          - Do not expose commit hashes or PR numbers
-          - Output plain Markdown, do not wrap in a code block
-          - Keep it under 300 words
-          " > /tmp/release-notes.md || true
+Requirements:
+- Describe changes in clear, user-facing English
+- Group by category where appropriate (e.g. ✨ Features / 🐛 Bug Fixes / 🔧 Improvements / 📦 Build & Release)
+- Do not expose commit hashes or PR numbers
+- Output plain Markdown, do not wrap in a code block
+- Keep it under 300 words"
 
-          # Fall back to a default message if Claude fails
+          RESPONSE=$(curl -sf --max-time 60 \
+            -X POST "https://openrouter.ai/api/v1/messages" \
+            -H "x-api-key: ${OPENROUTER_API_KEY}" \
+            -H "content-type: application/json" \
+            -H "anthropic-version: 2023-06-01" \
+            -d "$(jq -n --arg prompt "$PROMPT" '{
+              model: "anthropic/claude-sonnet-4-6",
+              max_tokens: 1024,
+              messages: [{"role": "user", "content": $prompt}]
+            }')" 2>/tmp/curl-error.txt) || {
+            echo "Warning: Claude API call failed:" >&2
+            cat /tmp/curl-error.txt >&2
+          }
+
+          if [ -n "${RESPONSE:-}" ]; then
+            echo "$RESPONSE" | jq -r '.content[0].text // empty' > /tmp/release-notes.md 2>/dev/null || true
+          fi
+
+          # Fall back to a default message if Claude fails or returns empty
           if [ ! -s /tmp/release-notes.md ]; then
             echo "Released \`${{ steps.package.outputs.name }}\` ${TAG} to npm." > /tmp/release-notes.md
           fi
