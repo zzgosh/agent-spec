@@ -99,22 +99,25 @@ jobs:
             DIFF_STAT="Initial release"
           fi
 
-          PROMPT="You are a release notes generator. Based on the git changes below, write concise and natural release notes for version ${TAG}.
+          PROMPT=$(cat <<END_PROMPT
+          You are a release notes generator. Based on the git changes below, write concise and natural release notes for version ${TAG}.
 
-Project: ${{ steps.package.outputs.name }} (CLI for managing AGENTS.md files)
+          Project: ${{ steps.package.outputs.name }} (CLI for managing AGENTS.md files)
 
-Git commits:
-${GIT_LOG}
+          Git commits:
+          ${GIT_LOG}
 
-File change stats:
-${DIFF_STAT}
+          File change stats:
+          ${DIFF_STAT}
 
-Requirements:
-- Describe changes in clear, user-facing English
-- Group by category where appropriate (e.g. ✨ Features / 🐛 Bug Fixes / 🔧 Improvements / 📦 Build & Release)
-- Do not expose commit hashes or PR numbers
-- Output plain Markdown, do not wrap in a code block
-- Keep it under 300 words"
+          Requirements:
+          - Describe changes in clear, user-facing English
+          - Group by category where appropriate (e.g. ✨ Features / 🐛 Bug Fixes / 🔧 Improvements / 📦 Build & Release)
+          - Do not expose commit hashes or PR numbers
+          - Output plain Markdown, do not wrap in a code block
+          - Keep it under 300 words
+          END_PROMPT
+          )
 
           RESPONSE=$(curl -sf --max-time 60 \
             -X POST "https://openrouter.ai/api/v1/messages" \
