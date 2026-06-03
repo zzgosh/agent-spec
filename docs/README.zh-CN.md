@@ -174,40 +174,6 @@ CLI 只会为检测到已安装的 agent 创建 symlink。
 | agent 路径是 symlink | 直接替换 | 直接替换 |
 | agent 路径是普通文件 | 跳过并提示 | 备份为 `.backup` 后替换 |
 
-## Directory Structure
-
-```text
-agent-specs/
-|-- .github/
-|   `-- workflows/
-|       |-- ci.yml          # PR 与 main 分支构建检查
-|       `-- release.yml     # 手动触发 npm 发布、tag 与 GitHub Release
-|-- bin/
-|   `-- cli.mjs              # CLI 入口
-|-- docs/
-|   `-- README.zh-CN.md      # 中文文档
-|-- src/
-|   |-- commands/
-|   |   |-- add.ts           # 安装命令
-|   |   |-- link.ts          # 重建 symlink
-|   |   |-- list.ts          # 查看安装状态
-|   |   |-- remove.ts        # 移除安装与链接
-|   |   `-- update.ts        # 从来源重新拉取
-|   |-- agents.ts            # Agent 检测与配置
-|   |-- cli.ts               # Commander 命令注册
-|   |-- config.ts            # 配置文件读写
-|   |-- linker.ts            # Symlink 创建 / 替换 / 备份
-|   |-- prompt.ts            # 终端确认提示
-|   |-- source.ts            # URL 解析与内容获取
-|   `-- types.ts             # 类型定义
-|-- build.config.mjs         # unbuild 配置
-|-- LICENSE                  # MIT 许可
-|-- package-lock.json        # npm lockfile
-|-- package.json             # 包元数据
-|-- README.md                # English documentation
-`-- tsconfig.json
-```
-
 ## 开发
 
 ```bash
