@@ -174,41 +174,6 @@ When `-a, --agent <name>` is provided, the CLI links the selected agent directly
 | Agent path is a symlink | Replace it directly | Replace it directly |
 | Agent path is a regular file | Skip and report it | Back up to `.backup` and replace it |
 
-## Directory Structure
-
-```text
-agent-specs/
-|-- .github/
-|   `-- workflows/
-|       |-- ci.yml
-|       `-- release.yml
-|-- .gitignore
-|-- bin/
-|   `-- cli.mjs
-|-- docs/
-|   `-- README.zh-CN.md
-|-- src/
-|   |-- commands/
-|   |   |-- add.ts
-|   |   |-- link.ts
-|   |   |-- list.ts
-|   |   |-- remove.ts
-|   |   `-- update.ts
-|   |-- agents.ts
-|   |-- cli.ts
-|   |-- config.ts
-|   |-- linker.ts
-|   |-- prompt.ts
-|   |-- source.ts
-|   `-- types.ts
-|-- build.config.mjs
-|-- LICENSE
-|-- package-lock.json
-|-- package.json
-|-- README.md
-`-- tsconfig.json
-```
-
 ## Development
 
 ```bash

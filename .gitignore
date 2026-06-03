@@ -7,7 +7,6 @@
 
 # Runtime files that may be created when testing the CLI in the repo root
 /.agents.json
-/AGENTS.md
 
 # Logs
 npm-debug.log*
